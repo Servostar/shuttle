@@ -1,0 +1,19 @@
+[*.sh]
+indent_style = space
+indent_size = 4
+
+# Configuration for shfmt:
+shell_variant      = posix
+binary_next_line   = true
+switch_case_indent = true
+space_redirects    = true
+keep_padding       = false
+function_next_line = true
+never_split        = true
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[Makefile]
+indent_style = tab
