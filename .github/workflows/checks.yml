@@ -1,0 +1,35 @@
+name: Check on Shells
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - edited
+    branches-ignore:
+      - 'release-please-**'
+jobs:
+  shellcheck:
+    name: Check with Shellcheck
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Check workflow files
+        uses: docker://rhysd/actionlint:latest
+        with:
+          args: -color
+      - name: Check Format
+        run: make formatcheck
+      - name: Check Source
+        run: make shellcheck
+      - name: Build
+        run: make build
+      - name: Prepare Artifact
+        id: prepare
+        run: |
+          script_name="shuttle-${{ github.sha }}.min.sh"
+          cp build/shuttle.min.sh "$script_name"
+          echo "script_name=" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          path: ${{ steps.prepare.outputs.script_name }}
