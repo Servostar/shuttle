@@ -207,9 +207,13 @@ ecma48_supports_ansi()
     # Match any of the above regular expressions.
     for rexp in "$@"; do
         if echo "${TERM}" | grep -qiE "${rexp}"; then
+            echo "$TERM"
             return 0
         fi
     done
 
     return 1
 }
+
+ECMA48_SUPPORTED="$(ecma48_supports_ansi)"
+export ECMA48_SUPPORTED
