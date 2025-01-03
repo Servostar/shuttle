@@ -22,6 +22,8 @@ jobs:
         run: make formatcheck
       - name: Check Source
         run: make shellcheck
+      - name: Run Shellspec
+        run: make test
       - name: Build
         run: make build
       - name: Prepare Artifact
