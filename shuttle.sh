@@ -2,7 +2,7 @@
 
 # Escape sequences
 # shellcheck source-path=src
-. "./src/ecma48.sh"
+. "./lib/ecma48.sh"
 # Logging functions.
 # shellcheck source-path=src
-. "./src/log.sh"
+. "./lib/log.sh"
