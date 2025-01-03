@@ -18,6 +18,15 @@ LOG_LEVEL_FATAL=6
 # shellcheck disable=SC2016
 LOG_FORMAT='"${level} | $0 | $(whoami) | $(date --rfc-3339 s): ${message}"'
 LOG_FILTER=${LOG_LEVEL_DEBUG}
+LOG_COLORS="true"
+
+# Styles for log entries.
+LOG_STYLE_TRACE="${STYLE_FAINT}"
+LOG_STYLE_DEBUG="${STYLE_FG_BLUE}"
+LOG_STYLE_INFO=""
+LOG_STYLE_WARN="${STYLE_FG_YELLOW}"
+LOG_STYLE_ERROR="${STYLE_FG_RED}"
+LOG_STYLE_FATAL="${STYLE_FG_BLACK}${STYLE_BOLD}${STYLE_BG_RED}"
 
 _log_level_to_string()
 (
@@ -36,6 +45,37 @@ _log_level_to_string()
     # Indirect expansion.
     eval level="\$$idx"
     echo "$level"
+)
+
+# Generate styling for an entire log entry based on the type of log entry.
+# May return nothing.
+# Parameters:
+#  - number: the numerical log level
+_log_get_entry_colors()
+(
+    if [ -z "$LOG_COLORS" ] || ! "$LOG_COLORS"; then
+        return 0
+    fi
+
+    idx="${1}"
+    style=""
+
+    # Boundary check.
+    if [ "$idx" -ge 1 ] && [ "$idx" -le 6 ]; then
+        # Clear positional parameters.
+        set --
+        set -- "$@" "$LOG_STYLE_TRACE" # trace
+        set -- "$@" "$LOG_STYLE_DEBUG" # debug
+        set -- "$@" "$LOG_STYLE_INFO"  # info
+        set -- "$@" "$LOG_STYLE_WARN"  # warning
+        set -- "$@" "$LOG_STYLE_ERROR" # error
+        set -- "$@" "$LOG_STYLE_FATAL" # fatal
+
+        # Indirect expansion.
+        eval style="\$$idx"
+    fi
+
+    echo "$style"
 )
 
 _log()
@@ -77,7 +117,7 @@ _log()
     # Must be printf instead of echo to correctly forward escape sequences.
     # NOTE: SC2059 does not apply as evaluation of variables happens above.
     # shellcheck disable=SC2059,SC2154
-    printf "${entry}\n"
+    printf "$(_log_get_entry_colors "$1")${entry}${STYLE_RESET}\n"
 )
 
 trace()
