@@ -33,7 +33,7 @@ jobs:
         run: |
           script_name="shuttle-${{ github.sha }}.min.sh"
           cp build/shuttle.min.sh "$script_name"
-          echo "script_name=" >> "$GITHUB_OUTPUT"
+          echo "script_name=$script_name" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.prepare.outputs.script_name }}
