@@ -26,8 +26,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Setup Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-24.11
       - name: Build Project
-        run: make build
+        run: nix-shell --run "make build"
       - name: Prepare Artifact
         id: prepare
         run: |

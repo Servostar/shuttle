@@ -18,18 +18,24 @@ jobs:
         uses: docker://rhysd/actionlint:latest
         with:
           args: -color
+      - name: Setup Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-24.11
       - name: Check Format
-        run: make formatcheck
+        run: nix-shell --run "make formatcheck"
       - name: Check Source
-        run: make shellcheck
+        run: nix-shell --run "make shellcheck"
+      - name: Run Shellspec
+        run: nix-shell --run "make test"
       - name: Build
-        run: make build
+        run: nix-shell --run "make build"
       - name: Prepare Artifact
         id: prepare
         run: |
           script_name="shuttle-${{ github.sha }}.min.sh"
           cp build/shuttle.min.sh "$script_name"
-          echo "script_name=" >> "$GITHUB_OUTPUT"
+          echo "script_name=$script_name" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.prepare.outputs.script_name }}

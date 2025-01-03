@@ -11,7 +11,12 @@ keep_padding       = false
 function_next_line = true
 never_split        = true
 
-[*.yml]
+[spec/**]
+# Ignore the entire "third_party" directory.
+# Since Shellspec makes use of a DSL unsupported by shfmt.
+ignore = true
+
+[*.{yml,nix}]
 indent_style = space
 indent_size = 2
 
