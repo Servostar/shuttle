@@ -18,14 +18,16 @@ jobs:
         uses: docker://rhysd/actionlint:latest
         with:
           args: -color
+      - name: Setup Nix
+        uses: cachix/install-nix-action@v27
       - name: Check Format
-        run: make formatcheck
+        run: nix-shell --run "make formatcheck"
       - name: Check Source
-        run: make shellcheck
+        run: nix-shell --run "make shellcheck"
       - name: Run Shellspec
-        run: make test
+        run: nix-shell --run "make test"
       - name: Build
-        run: make build
+        run: nix-shell --run "make build"
       - name: Prepare Artifact
         id: prepare
         run: |

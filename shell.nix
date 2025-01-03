@@ -6,6 +6,9 @@ in
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     shellspec
+    shfmt
+    shellcheck
+    gnumake
     busybox-sandbox-shell
     dash
     bash
