@@ -1,5 +1,5 @@
 
-.PHONY: shellcheck formatcheck actionlint format clean
+.PHONY: shellcheck formatcheck actionlint format clean test
 
 shellcheck:
 	shellcheck -x --check-sourced shuttle.sh
@@ -24,6 +24,9 @@ build: build/%.min.sh:
 	# Inline sourced scripts
 	bash -c "./scripts/inline.bash build/shuttle.sh"
 	cp build/shuttle.sh build/shuttle.min.sh
+
+test:
+	shellspec
 
 clean:
 	rm -rf build
