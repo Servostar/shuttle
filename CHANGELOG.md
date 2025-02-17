@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/Servostar/shuttle/compare/v0.1.0...v0.1.1) (2025-02-17)
+
+
+### Bug Fixes
+
+* set script name in action output for release ([1858b27](https://github.com/Servostar/shuttle/commit/1858b27df9d73d5e5785a6f770101d0b9fc01bcf))
+
 ## [0.1.0](https://github.com/Servostar/shuttle/compare/v0.0.0...v0.1.0) (2025-02-17)
 
 
