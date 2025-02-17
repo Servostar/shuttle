@@ -5,8 +5,6 @@ on:
       - synchronize
       - opened
       - edited
-    branches-ignore:
-      - 'release-please-**'
 jobs:
   shellcheck:
     name: Check with Shellcheck
