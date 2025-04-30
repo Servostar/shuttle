@@ -9,3 +9,6 @@
 # Logging functions.
 # shellcheck source-path=lib
 . "./lib/log.sh"
+# Highly customizable headers.
+# shellcheck source-path=lib
+. "./lib/header.sh"
